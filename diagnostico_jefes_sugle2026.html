@@ -82,7 +82,7 @@
     <div class="seccion">
       <div class="campo">
         <label>Nombre <span class="req">*</span></label>
-        <input type="text" id="nombre" placeholder="Tu nombre completo" required>
+        <input type="text" id="nombre" required>
         <span class="error-msg" id="err-nombre">Por favor ingresa tu nombre</span>
       </div>
       <div class="campo">
@@ -330,14 +330,14 @@
   <div class="estado" id="estado-ok">
     <div class="icono-g">✅</div>
     <h2>¡Gracias por tu tiempo!</h2>
-    <p>Tus respuestas fueron registradas. El área de Ingeniería Organizacional las analizará para construir el plan de mejora de los próximos 6 meses.</p>
+    <p>Tus respuestas fueron registradas. Tus respuestas serán analizadas para construir el plan de mejora de los próximos 6 meses.</p>
   </div>
   <div class="estado" id="estado-error">
     <div class="icono-g">⚠️</div>
     <h2>Hubo un problema al enviar</h2>
-    <p>Por favor intenta nuevamente o comunícate con el área de Ingeniería Organizacional.</p>
+    <p>Por favor intenta nuevamente o comunícate con Sugle.</p>
   </div>
-  <div class="pie">Sugle S.A.C. · Área de Ingeniería Organizacional · 2026</div>
+  <div class="pie">Sugle S.A.C. · 2026</div>
 </div>
 
 <script>
@@ -353,11 +353,36 @@ document.querySelectorAll('input[name="p2"]').forEach(r => {
 });
 
 function actualizarProgreso() {
-  const req = ['nombre','area','cargo','p1'];
-  let llenos = req.filter(id => document.getElementById(id)?.value.trim()).length;
-  if (document.querySelector('input[name="p5"]:checked')) llenos++;
-  if (document.querySelector('input[name="p6"]:checked')) llenos++;
-  const pct = Math.min(100, Math.round((llenos / 6) * 100));
+  // 5 bloques — cada uno vale 20%
+  // Bloque 1: p1 lleno + alguna opción en p3
+  // Bloque 2: p5 y p6 seleccionados
+  // Bloque 3: alguna herramienta marcada en p7
+  // Bloque 4: p12 seleccionado
+  // Bloque 5: alguna solución en p16
+  let bloques = 0;
+
+  // Bloque 0 (datos personales): nombre + area + cargo
+  const nombreOk = document.getElementById('nombre')?.value.trim();
+  const areaOk = document.getElementById('area')?.value.trim();
+  const cargoOk = document.getElementById('cargo')?.value.trim();
+  if (nombreOk && areaOk && cargoOk) bloques++;
+
+  // Bloque 1: tarea principal
+  if (document.getElementById('p1')?.value.trim()) bloques++;
+
+  // Bloque 2: causa y reglas
+  if (document.querySelector('input[name="p5"]:checked') && document.querySelector('input[name="p6"]:checked')) bloques++;
+
+  // Bloque 3: herramientas
+  if (document.querySelector('#p7-op input:checked')) bloques++;
+
+  // Bloque 4: información y documentos
+  if (document.querySelector('input[name="p12"]:checked')) bloques++;
+
+  // Bloque 5: visión
+  if (document.querySelector('#p16-op input:checked')) bloques++;
+
+  const pct = Math.min(100, Math.round((bloques / 6) * 100));
   document.getElementById('progreso').style.width = pct + '%';
   document.getElementById('pct').textContent = pct + '%';
 }
