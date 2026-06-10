@@ -84,7 +84,7 @@
     <div class="seccion">
       <div class="campo">
         <label>Nombre <span class="sub">Opcional — solo si quieres que te contactemos para seguimiento</span></label>
-        <input type="text" id="nombre" placeholder="Tu nombre completo">
+        <input type="text" id="nombre">
       </div>
       <div class="campo">
         <label>Área <span class="req">*</span></label>
@@ -335,9 +335,9 @@
   <div class="estado" id="estado-error">
     <div class="icono-g">⚠️</div>
     <h2>Hubo un problema al enviar</h2>
-    <p>Por favor intenta nuevamente o comunícate con el área de Ingeniería Organizacional.</p>
+    <p>Por favor intenta nuevamente o comunícate con Sugle.</p>
   </div>
-  <div class="pie">Sugle S.A.C. · Área de Ingeniería Organizacional · 2026</div>
+  <div class="pie">Sugle S.A.C. · 2026</div>
 </div>
 
 <script>
@@ -354,11 +354,30 @@ document.querySelectorAll('input[name="p2"]').forEach(r => {
 });
 
 function actualizarProgreso() {
-  const req = ['area','cargo','p1'];
-  let llenos = req.filter(id => document.getElementById(id)?.value.trim()).length;
-  if (document.querySelector('input[name="p5"]:checked')) llenos++;
-  if (document.querySelector('input[name="p6"]:checked')) llenos++;
-  const pct = Math.min(100, Math.round((llenos / 5) * 100));
+  // 5 bloques — cada uno vale ~17%
+  let bloques = 0;
+
+  // Bloque 0 (datos): area + cargo
+  const areaOk = document.getElementById('area')?.value.trim();
+  const cargoOk = document.getElementById('cargo')?.value.trim();
+  if (areaOk && cargoOk) bloques++;
+
+  // Bloque 1: tarea principal
+  if (document.getElementById('p1')?.value.trim()) bloques++;
+
+  // Bloque 2: causa y reglas
+  if (document.querySelector('input[name="p5"]:checked') && document.querySelector('input[name="p6"]:checked')) bloques++;
+
+  // Bloque 3: herramientas
+  if (document.querySelector('#p8-op input:checked')) bloques++;
+
+  // Bloque 4: información y documentos
+  if (document.querySelector('input[name="p12"]:checked')) bloques++;
+
+  // Bloque 5: visión
+  if (document.querySelector('#p16-op input:checked')) bloques++;
+
+  const pct = Math.min(100, Math.round((bloques / 6) * 100));
   document.getElementById('progreso').style.width = pct + '%';
   document.getElementById('pct').textContent = pct + '%';
 }
