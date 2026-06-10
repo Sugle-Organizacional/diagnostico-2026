@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico Organizacional 2026 · Especialistas · Sugle</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --verde: #2D8B4E;
+    --verde-oscuro: #1E6035;
+    --verde-claro: #E8F5ED;
+    --lavanda: #EDE8F5;
+    --lavanda-medio: #C8B8E8;
+    --morado-suave: #7B5EA7;
+    --texto: #1C1C1E;
+    --texto-medio: #5A5A6A;
+    --gris-claro: #F7F9F7;
+    --borde: #D8E8DC;
+    --blanco: #FFFFFF;
+    --rojo: #C0392B;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(160deg, #EAF5EE 0%, #EDE8F5 100%);
+    min-height: 100vh;
+    padding: 2rem 1rem 4rem;
+    color: var(--texto);
+  }
+
+  .contenedor { max-width: 680px; margin: 0 auto; }
+
+  .cabecera {
+    background: var(--verde);
+    border-radius: 16px;
+    padding: 2rem 2rem 1.75rem;
+    margin-bottom: 1.25rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cabecera::before {
+    content: '';
+    position: absolute;
+    top: -50px; right: -50px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+
+  .cabecera::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 30px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .sugle-logo {
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .badge-rol {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.95);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 0.75rem;
+    border: 1px solid rgba(255,255,255,0.25);
+  }
+
+  .cabecera h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #FFFFFF;
+    line-height: 1.25;
+    margin-bottom: 0.75rem;
+    position: relative;
+  }
+
+  .cabecera p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.65;
+    position: relative;
+  }
+
+  .progreso-wrap {
+    background: var(--blanco);
+    border-radius: 12px;
+    padding: 0.875rem 1.25rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid var(--borde);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .progreso-label { font-size: 12px; color: var(--texto-medio); white-space: nowrap; }
+  .progreso-barra { flex: 1; height: 4px; background: var(--verde-claro); border-radius: 2px; overflow: hidden; }
+  .progreso-fill { height: 100%; background: var(--verde); border-radius: 2px; transition: width 0.4s ease; width: 0%; }
+  .progreso-pct { font-size: 12px; font-weight: 600; color: var(--verde); min-width: 32px; text-align: right; }
+
+  .seccion {
+    background: var(--blanco);
+    border-radius: 14px;
+    padding: 1.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--borde);
+  }
+
+  .seccion-titulo {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--verde-oscuro);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--verde-claro);
+  }
+
+  .campo { margin-bottom: 1.25rem; }
+  .campo:last-child { margin-bottom: 0; }
+
+  .campo label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--texto);
+    margin-bottom: 7px;
+    line-height: 1.45;
+  }
+
+  .num { color: var(--verde); font-weight: 700; margin-right: 3px; }
+  .sub { display: block; font-weight: 400; font-size: 12px; color: var(--texto-medio); margin-top: 3px; line-height: 1.5; }
+  .req { color: var(--rojo); margin-left: 2px; }
+
+  input[type="text"], select, textarea {
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--texto);
+    background: var(--gris-claro);
+    border: 1.5px solid var(--borde);
+    border-radius: 9px;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    appearance: none;
+  }
+
+  input[type="text"]:focus, select:focus, textarea:focus {
+    border-color: var(--verde);
+    background: var(--blanco);
+    box-shadow: 0 0 0 3px rgba(45,139,78,0.08);
+  }
+
+  textarea { resize: vertical; min-height: 82px; line-height: 1.55; }
+
+  .opciones-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .opciones-col { display: flex; flex-direction: column; gap: 7px; }
+
+  .opcion {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 13px;
+    border: 1.5px solid var(--borde);
+    border-radius: 9px;
+    cursor: pointer;
+    background: var(--gris-claro);
+    transition: all 0.15s;
+    font-size: 13px;
+    color: var(--texto);
+    line-height: 1.4;
+  }
+
+  .opcion:hover { border-color: var(--verde); background: var(--verde-claro); }
+  .opcion.sel { border-color: var(--verde-oscuro); background: var(--verde-claro); color: var(--verde-oscuro); font-weight: 500; }
+  .opcion input { accent-color: var(--verde); width: 15px; height: 15px; flex-shrink: 0; margin-top: 1px; }
+
+  .rango-wrap { display: flex; align-items: center; gap: 12px; }
+  .rango-wrap input[type="range"] { flex: 1; accent-color: var(--verde); background: transparent; border: none; padding: 0; }
+  .rango-val { font-size: 15px; font-weight: 600; color: var(--verde); min-width: 60px; text-align: right; }
+
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    background: var(--lavanda);
+    color: var(--morado-suave);
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-left: 5px;
+    vertical-align: middle;
+  }
+
+  .error-msg { color: var(--rojo); font-size: 12px; margin-top: 5px; display: none; }
+
+  .btn-enviar {
+    width: 100%;
+    padding: 15px;
+    background: var(--verde);
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 11px;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    transition: background 0.2s, transform 0.1s;
+  }
+
+  .btn-enviar:hover { background: var(--verde-oscuro); }
+  .btn-enviar:active { transform: scale(0.99); }
+  .btn-enviar:disabled { background: #9CA3AF; cursor: not-allowed; }
+
+  .estado { display: none; text-align: center; padding: 3rem 2rem; background: var(--blanco); border-radius: 14px; border: 1px solid var(--borde); }
+  .estado .icono-g { font-size: 52px; margin-bottom: 1rem; }
+  .estado h2 { font-size: 20px; font-weight: 600; margin-bottom: 0.5rem; color: var(--verde); }
+  .estado p { font-size: 14px; color: var(--texto-medio); line-height: 1.6; }
+
+  .pie { text-align: center; font-size: 12px; color: var(--texto-medio); margin-top: 2rem; }
+
+  @media (max-width: 480px) {
+    .opciones-grid { grid-template-columns: 1fr; }
+    .cabecera h1 { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <div class="cabecera">
+    <div class="sugle-logo">Sugle S.A.C.</div>
+    <div class="badge-rol">Especialistas</div>
+    <h1>¿Cómo es tu trabajo<br>día a día?</h1>
+    <p>Queremos entender qué tareas te quitan más tiempo para poder ayudarte a trabajar mejor. No buscamos evaluar desempeño — buscamos mejorar procesos. Tu nombre es opcional. Toma unos 5 minutos.</p>
+  </div>
+
+  <div class="progreso-wrap">
+    <span class="progreso-label">Progreso</span>
+    <div class="progreso-barra"><div class="progreso-fill" id="progreso"></div></div>
+    <span class="progreso-pct" id="pct">0%</span>
+  </div>
+
+  <form id="formulario" novalidate>
+
+    <div class="seccion">
+      <div class="seccion-titulo">Sobre ti</div>
+
+      <div class="campo">
+        <label>Nombre <span class="sub">Opcional — solo si quieres que te contactemos para hacer seguimiento</span></label>
+        <input type="text" id="nombre" placeholder="Tu nombre completo">
+      </div>
+
+      <div class="campo">
+        <label>Área <span class="req">*</span></label>
+        <select id="area" required>
+          <option value="">Selecciona tu área...</option>
+          <option>IGAS y Permisos</option>
+          <option>Biología</option>
+          <option>Social</option>
+          <option>Administración</option>
+          <option>Oficina Técnica</option>
+          <option>Ingeniería</option>
+          <option>Área Comercial</option>
+        </select>
+        <span class="error-msg" id="err-area">Por favor selecciona tu área</span>
+      </div>
+
+      <div class="campo">
+        <label>Especialidad o cargo <span class="req">*</span></label>
+        <input type="text" id="cargo" placeholder="Ej: Especialista en calidad de agua, Biólogo de campo..." required>
+        <span class="error-msg" id="err-cargo">Por favor ingresa tu especialidad</span>
+      </div>
+    </div>
+
+    <div class="seccion">
+      <div class="seccion-titulo">La tarea que más tiempo te consume</div>
+
+      <div class="campo">
+        <label><span class="num">01</span> ¿Qué tarea manual o repetitiva haces con más frecuencia en tu trabajo? <span class="req">*</span>
+          <span class="sub">La que sientes que podrías hacer con los ojos cerrados de tanto repetirla — ej: "copiar datos del lab a Excel y comparar con ECAs", "organizar fotos de campo por punto de muestreo"</span>
+        </label>
+        <textarea id="p1" placeholder="Describe la tarea con el mayor detalle que puedas..." required></textarea>
+        <span class="error-msg" id="err-p1">Esta respuesta es clave para el diagnóstico</span>
+      </div>
+
+      <div class="campo">
+        <label><span class="num">02</span> ¿En qué proceso ocurre esa tarea?</label>
+        <div class="opciones-grid" id="p2-op">
+          <label class="opcion"><input type="radio" name="p2" value="Elaboración de IGA / EIA / MEIA"> Elaboración de IGA / EIA</label>
+          <label class="opcion"><input type="radio" name="p2" value="Respuesta a observaciones SENACE"> Observaciones SENACE</label>
+          <label class="opcion"><input type="radio" name="p2" value="Línea base / levantamiento de campo"> Línea base / campo</label>
+          <label class="opcion"><input type="radio" name="p2" value="Gabinete / procesamiento de datos"> Gabinete / datos</label>
+          <label class="opcion"><input type="radio" name="p2" value="SIG / Cartografía"> SIG / Cartografía</label>
+          <label class="opcion"><input type="radio" name="p2" value="QA / Revisión de informes"> QA / Revisión</label>
+          <label class="opcion"><input type="radio" name="p2" value="Gestión documental / administrativa"> Gestión documental</label>
+          <label class="opcion"><input type="radio" name="p2" value="Coordinación con cliente"> Coordinación cliente</label>
+        </div>
+      </div>
+
+      <div class="campo">
+        <label><span class="num">03</span> ¿Con qué frecuencia realizas esa tarea?</label>
+        <div class="opciones-grid" id="p3-op">
+          <label class="opcion"><input type="radio" name="p3" value="Diaria"> Diaria</label>
+          <label class="opcion"><input type="radio" name="p3" value="Varias veces por semana"> Varias veces/semana</label>
+          <label class="opcion"><input type="radio" name="p3" value="Semanal"> Semanal</label>
+          <label class="opcion"><input type="radio" name="p3" value="Por proyecto / entregable"> Por proyecto</label>
+          <label class="opcion"><input type="radio" name="p3" value="Solo en cierres o entregas"> Solo en cierres</label>
+          <label class="opcion"><input type="radio" name="p3" value="Mensual"> Mensual</label>
+        </div>
+      </div>
+
+      <div class="campo">
+        <label><span class="num">04</span> ¿Cuánto tiempo te demora cada vez que la haces?</label>
+        <div class="rango-wrap">
+          <input type="range" id="p4" min="10" max="480" value="60" step="10"
+            oninput="
+              const v = parseInt(this.value);
+              const h = Math.floor(v/60);
+              const m = v%60;
+              document.getElementById('val-p4').textContent = h>0 ? h+'h'+(m>0?' '+m+'min':'') : m+'min';
+            ">
+          <span class="rango-val" id="val-p4">1h</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="seccion">
+      <div class="seccion-titulo">Causa y tipo de problema</div>
+
+      <div class="campo">
+        <label><span class="num">05</span> ¿Cuál es la principal causa de que esa tarea sea tediosa o lenta? <span class="tag">clave</span>
+          <span class="sub">Marca la que más se acerca</span>
+        </label>
+        <div class="opciones-col" id="p5-op">
+          <label class="opcion"><input type="radio" name="p5" value="Digitación repetitiva o copiar/pegar entre archivos"> Digitación repetitiva o copiar/pegar entre archivos</label>
+          <label class="opcion"><input type="radio" name="p5" value="Búsqueda de información dispersa o sin orden"> Búsqueda de información dispersa o sin orden</label>
+          <label class="opcion"><input type="radio" name="p5" value="Falta de plantilla o formato estándar"> Falta de plantilla o formato estándar</label>
+          <label class="opcion"><input type="radio" name="p5" value="Espera de información de otra área o persona"> Espera de información de otra área o persona</label>
+          <label class="opcion"><input type="radio" name="p5" value="Datos incompletos o en formato no útil"> Datos incompletos o en formato no útil</label>
+          <label class="opcion"><input type="radio" name="p5" value="Criterios poco claros o que cambian"> Criterios poco claros o que cambian</label>
+          <label class="opcion"><input type="radio" name="p5" value="Revisión y correcciones múltiples"> Revisión y correcciones múltiples</label>
+          <label class="opcion"><input type="radio" name="p5" value="Falta de integración entre herramientas"> Falta de integración entre herramientas que ya usamos</label>
+        </div>
+      </div>
+
+      <div class="campo">
+        <label><span class="num">06</span> ¿La tarea sigue reglas claras y repetibles, o requiere tu criterio cada vez? <span class="tag">clave</span></label>
+        <div class="opciones-col" id="p6-op">
+          <label class="opcion"><input type="radio" name="p6" value="Sigue reglas claras, casi siempre igual"> Sigue reglas claras — casi siempre igual</label>
+          <label class="opcion"><input type="radio" name="p6" value="Parcialmente: tiene parte mecánica y parte que requiere criterio"> Parcialmente — parte mecánica y parte que requiere criterio</label>
+          <label class="opcion"><input type="radio" name="p6" value="Requiere criterio experto en cada caso"> Requiere mi criterio experto en cada caso</label>
+        </div>
+      </div>
+
+      <div class="campo">
+        <label><span class="num">07</span> ¿Existe alguna plantilla, checklist o procedimiento para esa tarea? <span class="tag">clave</span></label>
+        <div class="opciones-col" id="p7-op">
+          <label class="opcion"><input type="radio" name="p7" value="Sí, existe y lo uso"> Sí, existe y lo uso</label>
+          <label class="opcion"><input type="radio" name="p7" value="Existe pero no es suficiente o está desactualizada"> Existe pero no es suficiente o está desactualizada</label>
+          <label class="opcion"><input type="radio" name="p7" value="No existe, cada uno lo hace a su manera"> No existe — cada uno lo hace a su manera</label>
+          <label class="opcion"><input type="radio" name="p7" value="No sé si existe"> No sé si existe</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="seccion">
+      <div class="seccion-titulo">Herramientas y errores</div>
+
+      <div class="campo">
+        <label><span class="num">08</span> ¿Qué herramientas usas en tu día a día? <span class="sub">Marca todas las que apliquen</span></label>
+        <div class="opciones-grid" id="p8-op">
+          <label class="opcion"><input type="checkbox" value="Excel / Google Sheets"> Excel / Google Sheets</label>
+          <label class="opcion"><input type="checkbox" value="Word / Google Docs"> Word / Google Docs</label>
+          <label class="opcion"><input type="checkbox" value="ArcGIS Pro"> ArcGIS Pro</label>
+          <label class="opcion"><input type="checkbox" value="QGIS"> QGIS</label>
+          <label class="opcion"><input type="checkbox" value="AutoCAD / Civil 3D"> AutoCAD / Civil 3D</label>
+          <label class="opcion"><input type="checkbox" value="Python / Scripts"> Python / Scripts</label>
+          <label class="opcion"><input type="checkbox" value="Correo / WhatsApp"> Correo / WhatsApp</label>
+          <label class="opcion"><input type="checkbox" value="Papel / Formatos físicos"> Papel / Formatos físicos</label>
+          <label class="opcion"><input type="checkbox" value="KoBoToolbox / ODK"> KoBoToolbox / ODK</label>
+          <label class="opcion"><input type="checkbox" value="GPS / Celular en campo"> GPS / Celular en campo</label>
+        </div>
+      </div>
+
+      <div class="campo">
+        <label><span class="num">09</span> ¿Con qué frecuencia cometes o detectas errores por hacer algo manualmente?</label>
+        <div class="opciones-grid" id="p9-op">
+          <label class="opcion"><input type="radio" name="p9" value="Seguido, es difícil evitarlo"> Seguido, difícil evitarlo</label>
+          <label class="opcion"><input type="radio" name="p9" value="A veces, pero lo controlo"> A veces, lo controlo</label>
+          <label class="opcion"><input type="radio" name="p9" value="Rara vez"> Rara vez</label>
+          <label class="opcion"><input type="radio" name="p9" value="Casi nunca"> Casi nunca</label>
+        </div>
+      </div>
+
+      <div class="campo">
+        <label><span class="num">10</span> ¿Hay información que necesitas pero te cuesta encontrar o acceder?
+          <span class="sub">Ej: observaciones anteriores de SENACE, datos de otros proyectos, resultados de laboratorio</span>
+        </label>
+        <textarea id="p10" placeholder="Describe qué información y por qué es difícil de acceder..."></textarea>
+      </div>
+
+      <div class="campo">
+        <label><span class="num">11</span> ¿Dependes de otra área o persona para poder avanzar en tu trabajo?</label>
+        <div class="opciones-grid" id="p11-op">
+          <label class="opcion"><input type="radio" name="p11" value="Sí, me traba con frecuencia"> Sí, me traba seguido</label>
+          <label class="opcion"><input type="radio" name="p11" value="A veces genera retrasos"> A veces genera retrasos</label>
+          <label class="opcion"><input type="radio" name="p11" value="Rara vez es un problema"> Rara vez es problema</label>
+          <label class="opcion"><input type="radio" name="p11" value="No, trabajo de forma independiente"> Trabajo independiente</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="seccion">
+      <div class="seccion-titulo">Tu visión</div>
+
+      <div class="campo">
+        <label><span class="num">12</span> Si pudieras eliminar una tarea de tu trabajo mañana mismo, ¿cuál sería?</label>
+        <textarea id="p12" placeholder="La que más tiempo te quita sin agregar mucho valor..."></textarea>
+      </div>
+
+      <div class="campo">
+        <label><span class="num">13</span> ¿Qué tipo de solución crees que ayudaría más? <span class="tag">clave</span>
+          <span class="sub">Marca hasta 2 opciones</span>
+        </label>
+        <div class="opciones-col" id="p13-op">
+          <label class="opcion"><input type="checkbox" value="Automatización (script o flujo automático)"> Automatización — script o flujo automático</label>
+          <label class="opcion"><input type="checkbox" value="Plantilla o formato estándar"> Plantilla o formato estándar</label>
+          <label class="opcion"><input type="checkbox" value="Repositorio o base de datos histórica"> Repositorio o base de datos histórica</label>
+          <label class="opcion"><input type="checkbox" value="Tablero de seguimiento o dashboard"> Tablero de seguimiento o dashboard</label>
+          <label class="opcion"><input type="checkbox" value="Responsable claro y calendario de entregas"> Responsable claro y calendario de entregas</label>
+          <label class="opcion"><input type="checkbox" value="Capacitación o guía de uso"> Capacitación o guía de uso</label>
+          <label class="opcion"><input type="checkbox" value="Integración entre herramientas"> Integración entre herramientas que ya usamos</label>
+          <label class="opcion"><input type="checkbox" value="Eliminar un paso innecesario"> Eliminar un paso innecesario del proceso</label>
+        </div>
+      </div>
+
+      <div class="campo">
+        <label><span class="num">14</span> ¿Algo más que quieras decir? <span class="sub">Sin filtros — cualquier cosa que sientas que debería mejorar</span></label>
+        <textarea id="p14" placeholder="Comentario libre..."></textarea>
+      </div>
+    </div>
+
+    <button type="submit" class="btn-enviar" id="btn">Enviar respuestas →</button>
+
+  </form>
+
+  <div class="estado" id="estado-ok">
+    <div class="icono-g">✅</div>
+    <h2>¡Gracias por tu tiempo!</h2>
+    <p>Tus respuestas fueron registradas. Nos ayudan a construir un plan de mejora real para tu trabajo diario.</p>
+  </div>
+
+  <div class="estado" id="estado-error">
+    <div class="icono-g">⚠️</div>
+    <h2>Hubo un problema al enviar</h2>
+    <p>Por favor intenta nuevamente o comunícate con el área de Ingeniería Organizacional.</p>
+  </div>
+
+  <div class="pie">Sugle S.A.C. · Área de Ingeniería Organizacional · 2026</div>
+</div>
+
+<script>
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwl0Y9ltvfQFj-CmoDe3XmollZ0eHRRGLifhqYiNoZfDypAqUy0EsrcBavrqHsx9A/exec";
+
+function actualizarProgreso() {
+  const req = ['area','cargo','p1'];
+  let llenos = req.filter(id => document.getElementById(id)?.value.trim()).length;
+  if (document.querySelector('input[name="p5"]:checked')) llenos++;
+  if (document.querySelector('input[name="p6"]:checked')) llenos++;
+  const pct = Math.min(100, Math.round((llenos / 5) * 100));
+  document.getElementById('progreso').style.width = pct + '%';
+  document.getElementById('pct').textContent = pct + '%';
+}
+
+document.querySelectorAll('input, textarea, select').forEach(el => {
+  el.addEventListener('input', actualizarProgreso);
+  el.addEventListener('change', actualizarProgreso);
+});
+
+document.addEventListener('change', (e) => {
+  if (e.target.type === 'radio') {
+    document.querySelectorAll(`input[name="${e.target.name}"]`).forEach(r => {
+      r.closest('.opcion').classList.remove('sel');
+    });
+    e.target.closest('.opcion').classList.add('sel');
+  }
+  if (e.target.type === 'checkbox') {
+    e.target.closest('.opcion').classList.toggle('sel', e.target.checked);
+  }
+});
+
+function getRadio(name) {
+  const r = document.querySelector(`input[name="${name}"]:checked`);
+  return r ? r.value : '';
+}
+
+function getChecked(id) {
+  return Array.from(document.querySelectorAll(`#${id} input:checked`))
+    .map(i => i.value).join(', ') || '';
+}
+
+function validar() {
+  let ok = true;
+  [['area','err-area'],['cargo','err-cargo'],['p1','err-p1']].forEach(([id, err]) => {
+    if (!document.getElementById(id).value.trim()) {
+      document.getElementById(err).style.display = 'block'; ok = false;
+    } else { document.getElementById(err).style.display = 'none'; }
+  });
+  return ok;
+}
+
+document.getElementById('formulario').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (!validar()) { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+
+  const btn = document.getElementById('btn');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+
+  const v = parseInt(document.getElementById('p4').value);
+  const h = Math.floor(v/60), m = v%60;
+  const durTexto = h > 0 ? h+'h'+(m>0?' '+m+'min':'') : m+'min';
+
+  const payload = {
+    tipo: 'especialista',
+    nombre: document.getElementById('nombre').value || 'Anónimo',
+    area: document.getElementById('area').value,
+    cargo: document.getElementById('cargo').value,
+    p1_tarea: document.getElementById('p1').value,
+    p2_proceso: getRadio('p2'),
+    p3_frecuencia: getRadio('p3'),
+    p4_duracion: durTexto,
+    p5_causa: getRadio('p5'),
+    p6_reglas: getRadio('p6'),
+    p7_plantilla: getRadio('p7'),
+    p8_herramientas: getChecked('p8-op'),
+    p9_errores: getRadio('p9'),
+    p10_informacion: document.getElementById('p10').value,
+    p11_dependencia: getRadio('p11'),
+    p12_eliminar: document.getElementById('p12').value,
+    p13_solucion: getChecked('p13-op'),
+    p14_libre: document.getElementById('p14').value
+  };
+
+  try {
+    await fetch(APPS_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload), mode: 'no-cors' });
+    document.getElementById('formulario').style.display = 'none';
+    document.getElementById('estado-ok').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = 'Enviar respuestas →';
+    document.getElementById('estado-error').style.display = 'block';
+  }
+});
+</script>
+</body>
+</html>
